@@ -27,6 +27,15 @@
 	color: rgb(196, 85, 0);
 }
 
+.link-github {
+	margin: 0;
+	padding: 12px;
+	background-color: rgb(220, 220, 220);
+	display: inline-block;
+	border-radius: 5px;
+	color: rgb(196, 85, 0);
+}
+
 @media (min-width: 670px) {
 	.grid-content-contato {
 		margin: 20px;
