@@ -1,0 +1,97 @@
+.modal-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  background-color: black;
+  text-align: center;
+  z-index: 100;
+  
+
+  position: fixed; /* Stay in place */
+  z-index: 100; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+}
+
+.modal-content {
+  background-color: black;
+  text-align: center;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+
+  /*padding-top: 50px;*/
+}
+
+img {
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.modal-legenda {
+  background-color: rgb(220, 220, 220);
+  color: black;
+  height: 50px;
+  box-sizing: border-box;
+  border: 0;
+  border-top: 1px solid #c8ccd1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.modal-pre-img {
+  z-index: 200;
+  position: absolute;
+  width: 100%;
+
+  /*display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;*/
+
+  font-size: 3.5rem;
+  color: white;
+
+  background-color: blue;
+}
+
+.prev-img:hover, .next-img:hover, .close-img:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.prev-img.invisible, .next-img.invisible, .close-img.invisible,
+.modal-legenda.invisible {
+  display: none;
+}
+
+.prev-img {
+  position: fixed;
+  background-position: left;
+  left: 18px;
+  padding: 25px; padding-left: 0;
+  opacity: 0.8;
+}
+
+.next-img {
+  position: fixed;
+  background-position: right;
+  right: 18px;
+  padding: 25px; padding-right: 0;
+  opacity: 0.8;
+}
+
+.close-img {
+  position: fixed;
+  background-position: right;
+  right: 18px;
+  top: 20px;
+  color: white;
+  opacity: 0.7;
+}

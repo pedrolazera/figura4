@@ -1,0 +1,267 @@
+html {
+   margin: 0px;
+   min-height: 100vh;
+   width: 100%;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	font-size: 18px;
+	margin: 0;
+	min-height: 100vh;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+/* celular*/
+.grid {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.grid-header {
+	display: flex;
+	flex-direction: column;
+	background-color: rgb(37, 116, 63);
+	color: white;
+	border-bottom: 2px solid black;
+}
+
+.grid-header-top {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 10px 20px;
+}
+
+.grid-header-top > .grid-header-search {
+	display: none;
+}
+
+.grid-header-logo {
+	font-size: 1.7rem;
+	color: white;
+	letter-spacing: 2px;
+}
+
+.grid-header-logo > a {
+	cursor: pointer;
+}
+
+.grid-header-icons {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	font-size: 1.7rem;
+	margin: 0 -10px;
+}
+
+.grid-header-icons > * {
+	text-align: center;
+	margin: 0 15px;
+}
+
+.grid-header-icons > *:hover {
+	cursor: pointer;
+}
+
+.grid-header-bottom > .grid-header-search {
+	display: flex;
+	justify-content: space-around;
+	margin: 5px 7px;
+	padding: 7px 5px;
+	background-color: rgb(209, 224, 224);
+	border-radius: 7px;
+}
+
+.grid-header-search > input {
+	width: 100%;
+	background-color: inherit;
+	border: none;
+	font-size: 1.1rem;
+	padding: 3px 0px;
+	padding-left: 10px;
+	font-family: inherit;
+}
+
+.grid-header-bottom > .grid-header-search.invisible {
+	display: none;
+}
+
+.grid-nav-content {
+	display: flex;
+	flex-direction: column;
+}
+
+.grid-nav {
+	background-color:rgb(245,245,245);
+	border-bottom: 2px solid black;
+}
+
+.grid-nav.invisible {
+	display: none;
+}
+
+.grid-nav > ul {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0px 0px;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+}
+
+.grid-nav > ul > li {
+	padding: 0px 0px;
+}
+
+.grid-nav > ul > li > span {
+	padding: 9px 12px;
+	color: rgb(54, 95, 56);
+	width: 100%;
+	display: block;
+	box-sizing: border-box;
+	border-radius: 0px;
+	cursor: pointer;
+}
+
+.grid-nav > ul > li > span:hover {
+	color: rgb(20,20,20);
+	background-color: rgb(225,225,225);
+}
+
+.grid-nav > ul > li > span.active {
+	color: white;
+	background-color: rgb(52, 76, 76);
+}
+
+.grid-content  {
+	padding-bottom: 15px;
+}
+
+@media (min-width: 670px) {
+	.grid-header-top {
+		justify-content: flex-start;
+		padding: 10px 20px;
+	}
+
+	.grid-header-logo {
+		display: flex;
+		width: 240px;
+		align-items: center;
+	}
+
+	.grid-header-top > .grid-header-search {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		margin: 5px 7px;
+		padding: 7px 5px;
+		background-color: rgb(209, 224, 224);
+		border-radius: 7px;
+		width: 90%;
+		max-width: 550px;
+	}
+
+	.grid-header-top > .grid-header-search > .fa-search {
+		color: rgb(37, 116, 63);
+		font-size: 1.3rem;
+		padding: 8px;
+		margin-right: 12px;
+		cursor: pointer;
+	}
+
+	.grid-header-top > .grid-header-search > .fa-search:hover {
+		border-radius: 50%;
+		background-color: rgb(163, 194, 194);
+	}
+
+	.grid-header-top > .grid-header-search > input {
+		outline: none;
+	}
+
+	.grid-header-bottom {
+		display: none;
+	}
+
+	.grid-header-icons {
+		display: none;
+	}
+
+	.grid-nav-content {
+		flex-direction: row;
+		justify-content: stretch;
+		flex-grow: 1;
+	}
+
+	.grid-nav {
+		width: 220px;
+		/*height: 100vh;*/
+		border: 0;
+		border: 1px solid #e3e3e3;
+		flex-grow: 0;
+		flex-basis: 220px;
+		box-sizing: border-box;
+		display: block;
+	}
+
+	.grid-nav.invisible {
+		display: block;
+	}
+
+	.grid-nav > ul {
+		display: flex;
+		flex-direction: column;
+		margin: 0;
+		padding: 20px 0px;
+		box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+	}
+
+	.grid-nav > ul > li {
+		padding: 2px 6px;
+	}
+
+	.grid-nav > ul > li > span {
+		border-radius: 7px;
+	}
+
+	.grid-content {
+		flex-grow: 1;
+		flex-basis: 0px;
+	}
+}
+
+/* experimentos */
+
+/*
+.grid-header-top > .grid-header-search {
+	background-color: rgb(146, 160, 136);
+	transition: background-color 0.4s;
+}
+
+.grid-header-top > .grid-header-search.cool {
+	background-color: white;
+	color: black;
+}
+*/
+
+.translateX-right {
+	visibility: hidden;
+	transform: translateX(200px);
+}
+
+#content-container.translateX-center {
+	visibility: visible;
+	transition: transform 0.2s;
+	transform: translateX(0);
+}
+
+
+::placeholder {
+	color: rgb(157,165,173);
+}

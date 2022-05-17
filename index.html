@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- suporte a acentos -->
+	<meta charset="UTF-8" />
+
+	<!-- tag para ajuste do app em telas de celular e tables -->
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
+
+	<title>Figura4 - Biblioteca de vias de escalada</title>
+
+	<!-- Fontawesome, para ícones -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+	<!-- Google fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+
+	<!-- estilo interno -->
+	<link rel="stylesheet" type="text/css" href="styles/main.css">
+	<link rel="stylesheet" type="text/css" href="styles/menus.css">
+	<link rel="stylesheet" type="text/css" href="styles/table.css">
+	<link rel="stylesheet" type="text/css" href="styles/modal.css">
+	<link rel="stylesheet" type="text/css" href="styles/vias.css">
+	<link rel="stylesheet" type="text/css" href="styles/conquistas.css">
+	<link rel="stylesheet" type="text/css" href="styles/guias.css">
+	<link rel="stylesheet" type="text/css" href="styles/contato.css">
+
+	<!-- js interno -->
+	<!--<script type="text/javascript" src="/static/js/requests.js"></script>-->
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/tree.js"></script>
+	<script type="text/javascript" src="js/templates.js"></script>
+	
+	<!-- components -->
+	<script type="text/javascript" src="js/components/staticComponent.js"></script>
+	<script type="text/javascript" src="js/components/navbarComponent.js"></script>
+	<script type="text/javascript" src="js/components/modalComponent.js"></script>
+	<script type="text/javascript" src="js/components/conquistaComponent.js"></script>
+	<script type="text/javascript" src="js/components/menusComponent.js"></script>
+	<script type="text/javascript" src="js/components/guiasComponent.js"></script>
+
+	<script type="text/javascript" src="js/vias.js"></script>
+</head>
+<body>
+
+<div class="grid">
+	<div class="grid-header">
+		<div class="grid-header-top">
+			<div class="grid-header-logo">
+				<a id="logo">Figura4</a>
+			</div>
+
+			<div class="grid-header-search">
+				<input id="search-input-desktop" class="search-bar" type="search" placeholder="nome da via ou do local">
+				<i id="search-icon-desktop" class="fas fa-search"></i>
+			</div>
+
+			<div class="grid-header-icons">
+				<i id="search-icon-cell" class="fas fa-search"></i>
+				<i id="hamburguer-icon-cell" class="fas fa-bars"></i>
+			</div>
+		</div> <!-- <div class="grid-header-top"> -->
+
+		<div class="grid-header-bottom">
+			<div id="grid-header-search" class="grid-header-search invisible">
+				<input id="search-input-bottom" class="search-bar" type="search" placeholder="nome da via ou do local">
+			</div>
+		</div>
+	</div> <!-- <div class="grid-header"> -->
+
+	<div class="grid-nav-content">
+		<div id="nav-bar" class="grid-nav invisible">
+			<ul>
+				<li><span id="navbar-link-to-vias" class="selected">Vias</span></li>
+				<li><span id="navbar-link-to-conquistas" class="">Conquistas</span></li>
+				<li><span id="navbar-link-to-graduacao">Graduação</span></li>
+				<li><span id="navbar-link-to-guias">Guias</span></li>
+				<li><span id="navbar-link-to-contato">Contato</span></li>
+				<!--<li><span id="navbar-link-to-conquistadores">Conquistadores</span></li>-->
+				<!--<li><span >Estou com sorte!</span></li>-->
+			</ul>
+		</div>
+
+		<div id="content-container" class="grid-content">
+
+		</div> <!-- <div class="grid-content"> -->
+	</div>
+
+	<div class="grid-footer">
+	</div>
+</div>
+
+<!-- templates -->
+
+<!-- templates do menu - estrutura -->
+<template id="t-menus">
+	<div class="grid-content-menus">
+		<div class="menus-options">
+			<div class="menus-options-toggle">
+				<span> Filtros </span>
+				<span class="menus-options-toggle-plus" ref="plus"> + </span>
+			</div>
+
+			<div class="menus-options-list invisible" id="menus-options-list" ref="options-btn">
+				<div class="menus-option menus-ordena" ref="ordena" id="menus-ordena">
+					<div class="menus-ordena-explica"> Ordenar vias por:</div>
+					<div class="menus-ordena-options">
+						<div class="menus-ordena-nome" ref="sort-by-nome"> Nome </div>
+						<div class="menus-ordena-extensao" ref="sort-by-extensao"> Extensão </div>
+					</div>
+				</div>
+			</div> <!-- <div class="guias-options-list"> -->
+
+
+		</div>
+
+		<div ref="loc" class="grid-content-menus-localizacao"></div>
+		<div ref="lista" class="grid-content-menus-list" id="menus-list"></div>
+	</div>
+</template>
+
+<!-- templates do menu interno - cartao do local -->
+<template id="t-menus-item-local">
+	<div ref="container" class="grid-content-item item-local">
+		<div ref="left" class="left">
+			<div ref="nome" class="nome"></div>
+		</div>
+		<div class="badges">
+			<div ref="qtd" class="badge badge-qtd-via item-local-qtd"></div>
+		</div>
+	</div>
+</template>
+
+<!-- templates do menu interno - cartao da via -->
+<template id="t-menus-item-via">
+	<div ref="container" class="grid-content-item item-via">
+		<div ref="left" class="left">
+			<div ref="nome" class="nome"></div>
+		</div>
+		<div class="badges">
+			<div ref="grau" class="badge badge-grau-via item-via-grau">-</div>
+			<div ref="extensao" class="badge badge-ext-via item-via-ext">-</div>
+		</div>
+	</div>
+</template>
+
+<!-- templates do menu - estrutura com via -->
+<template id="t-via">
+	<div class="grid-content-menus">
+		<div ref="loc" class="grid-content-menus-localizacao"></div>
+		<div ref="via" class="grid-content-menus-via"></div>
+	</div>
+</template>
+
+<!-- template de folha da via -->
+<template id="t-via-content">
+	<div class="desc_row">
+		<div ref="titulo" class="desc_row_item desc_row_title"></div>
+	</div>
+
+	<div class="desc_row">
+		<div class="desc_row_item">
+			<h3>Graduação</h3>
+			<p ref="graduacao"></p>
+		</div>
+
+		<div class="desc_row_item">
+			<h3>Extensão</h3>
+			<p ref="extensao"></p>
+		</div>
+
+		<div class="desc_row_item">
+			<h3>Ano</h3>
+			<p ref="ano"></p>
+		</div>
+	</div>
+
+	<div class="desc_row">
+		<a ref="icon-croqui" class="ficha_icon far fa-map far-croqui" target="_blank">
+			<div>Croqui</div>
+		</a>
+
+		<a ref="icon-fotos" class="ficha_icon far fa-images far-image" target="_blank">
+			<div>Fotos</div>
+		</a>
+	</div>
+
+	<div class="desc_row">
+		<div class="desc_row_item desc_row_item_unico">
+			<h3>Conquistadores</h3>
+			<div ref="conquistadores" class="lista-conquistadores"></div>
+		</div>
+	</div>
+
+	<div class="desc_row">
+		<div class="desc_row_item desc_row_item_unico">
+			<h3>Observações</h3>
+			<div ref="observacoes" class="lista-observacoes"></div>
+		</div>
+	</div>
+</template>
+
+<!-- templates da conquista -->
+<template id="t-conquistas-0">
+	<div class="grid-content-conquistas">
+		<div class="conquistas-options">
+			<div class="conquistas-options-toggle">
+				<span> Filtros </span>
+				<span class="conquistas-options-toggle-plus" ref="plus"> + </span>
+			</div>
+
+			<div class="conquistas-options-list invisible" id="conquistas-options-list">
+				<!--<div class="conquistas-option conquistas-busca" ref="busca" id="conquistas-busca">
+					<input id="conquistas-search-input" class="conquistas-search-bar" type="search" placeholder="nome do conquistador" ref="search-input">
+					<i id="conquistas-search-icon" class="fas fa-search" ref="search-icon"></i>
+				</div>-->
+				
+				<div class="conquistas-option conquistas-barra" ref="barra" id="conquistas-barra"></div>
+
+				<div class="conquistas-option conquistas-ordena" ref="ordena" id="conquistas-ordena">
+					<div class="conquistas-ordena-explica"> Ordenar por:</div>
+					<div class="conquistas-ordena-options">
+						<div class="conquistas-ordena-nome" ref="sort-by-name"> Nome </div>
+						<div class="conquistas-ordena-qtd" ref="sort-by-qtd"> Qtd </div>
+					</div>
+				</div>
+			</div> <!-- <div class="conquistas-options-list"> -->
+		</div> <!-- <div class="conquistas-options"> -->
+
+		<div ref="nomes" class="conquistas-nomes"></div>
+	</div>
+</template>
+
+<template id="t-conquistas-1">
+	<div class="grid-content-conquistas">
+		<div ref="nome" class="conquistas-nome"></div>
+		<div ref="grupos" class="conquistas-grupos"></div>
+	</div>
+</template>
+
+<template id="t-conquistas-1-grupo">
+	<div class="grid-content-conquistas-grupo">
+		<div ref="local" class="conquistas-grupo-local"></div>
+		<div ref="vias" class="conquistas-grupo-vias"></div>
+	</div>
+</template>
+
+<!-- template do modal -->
+<template id="t-modal">
+	<div class="modal-wrapper">
+		<div class="modal-pre-img">
+			<div ref="prev-img" id="prev-img" class="prev-img">
+				<i class="fas fa-angle-left"></i>
+			</div>
+			<div ref="next-img" id="next-img" class="next-img">
+				<i class="fas fa-angle-right"></i>
+			</div>
+			<div ref="close-img" id="close-img" class="close-img">
+				<i class="fas fa-times"></i>
+			</div>
+		</div> <!-- modal-pre-img -->
+
+		<div ref="modal-content" id="modal-content" class="modal-content">
+			<img ref="modal-img" id="modal-img" src="">
+		</div>
+
+		<div ref="modal-legenda" div="modal-legenda" class="modal-legenda">
+		</div>
+	</div> <!-- modal-wrapper -->
+</template> <!-- t-modal -->
+
+<!-- template do contato -->
+<template id="t-contato">
+	<div class="grid-content-contato grid-content-static">
+		<div class="contato-titulo">
+			Contato
+		</div>
+
+		<div class="contato-descricao">
+			<p> <strong>Obrigado pela visita!</strong> A Figura4 é um site para faciliar a busca de informações sobre escalada. Não é uma rede social. </p>
+			<p> Para entrar em contato, mande um email. Será um prazer ouvir sugestões, críticas e elogios. </p>
+		</div>
+
+		<div class="contato-email">
+			<a href="mailto:figura4.croquiteca@gmail.com">figura4.croquiteca@gmail.com
+			</a>
+		</div>
+	</div>
+</template>
+
+<!-- template de guias -->
+<template id="t-guias">
+	<div class="grid-content-guias">
+		<div class="guias-options">
+			<div class="guias-options-toggle">
+				<span> Filtros </span>
+				<span class="guias-options-toggle-plus" ref="plus"> + </span>
+			</div>
+
+			<div class="guias-options-list invisible" id="guias-options-list" ref="options-btn">
+				<div class="guias-option guias-ordena" ref="ordena" id="guias-ordena">
+					<div class="guias-ordena-explica"> Ordenar por:</div>
+					<div class="guias-ordena-options">
+						<div class="guias-ordena-livro" ref="sort-by-livro"> Livro </div>
+						<div class="guias-ordena-autor" ref="sort-by-autor"> Autor </div>
+					</div>
+				</div>
+			</div> <!-- <div class="guias-options-list"> -->
+
+
+		</div>
+
+		<div class="guias-inner-content" id="guias-inner-content" ref="lista-guias"></div>
+	</div>
+</template>
+
+<template id="t-guias-item">
+	<div class="guias-item">
+		<div class="guias-item-img">
+			<img ref="img"></img>
+		</div>
+		<div class="guias-item-descricao">
+			<div class="guias-item-descricao-title" ref="titulo">
+			</div>
+			<div class="guias-item-descricao-autor" ref="autor">
+			</div>
+		</div>
+	</div>
+</template>
+
+<!-- template de graduação -->
+<template id="t-graduacao">
+	<div class="grid-content-graduacao grid-content-static">
+		<div class="table">
+			<div class="table-row table-header">
+				<div class="table-cell">Brasil</div>
+				<div class="table-cell">UIAA</div>
+				<div class="table-cell">França</div>
+				<div class="table-cell">EUA</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">I sup</div>
+				<div class="table-cell">-</div>
+				<div class="table-cell">-</div>
+				<div class="table-cell">5.0</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">II</div>
+				<div class="table-cell">2</div>
+				<div class="table-cell">II</div>
+				<div class="table-cell">5.1</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">II sup</div>
+				<div class="table-cell">-</div>
+				<div class="table-cell">-</div>
+				<div class="table-cell">5.2</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">-</div>
+				<div class="table-cell">3</div>
+				<div class="table-cell">III</div>
+				<div class="table-cell">5.3</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">III</div>
+				<div class="table-cell">4a</div>
+				<div class="table-cell">IV</div>
+				<div class="table-cell">5.4</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">III sup</div>
+				<div class="table-cell">4b</div>
+				<div class="table-cell">IV+/V-</div>
+				<div class="table-cell">5.5</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">IV</div>
+				<div class="table-cell">4c</div>
+				<div class="table-cell">V</div>
+				<div class="table-cell">5.6</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">-</div>
+				<div class="table-cell">5a</div>
+				<div class="table-cell">V+</div>
+				<div class="table-cell">5.7</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">IV sup</div>
+				<div class="table-cell">5b</div>
+				<div class="table-cell">VI-</div>
+				<div class="table-cell">5.8</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">V</div>
+				<div class="table-cell">5c</div>
+				<div class="table-cell">VI</div>
+				<div class="table-cell">5.9</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">VI</div>
+				<div class="table-cell">6a</div>
+				<div class="table-cell">VI+</div>
+				<div class="table-cell">5.10a</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">-</div>
+				<div class="table-cell">6a+</div>
+				<div class="table-cell">VII-</div>
+				<div class="table-cell">5.10b</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">VI sup</div>
+				<div class="table-cell">6b</div>
+				<div class="table-cell">VII</div>
+				<div class="table-cell">5.10c</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">-</div>
+				<div class="table-cell">6b+</div>
+				<div class="table-cell">VII+</div>
+				<div class="table-cell">5.10d</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">7a</div>
+				<div class="table-cell">6c</div>
+				<div class="table-cell">-</div>
+				<div class="table-cell">5.11a</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">7b</div>
+				<div class="table-cell">6c+</div>
+				<div class="table-cell">VIII-</div>
+				<div class="table-cell">5.11b</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">7c</div>
+				<div class="table-cell">-</div>
+				<div class="table-cell">-</div>
+				<div class="table-cell">5.11c</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">-</div>
+				<div class="table-cell">7a</div>
+				<div class="table-cell">VIII</div>
+				<div class="table-cell">5.11d</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">8a</div>
+				<div class="table-cell">7a+</div>
+				<div class="table-cell">VIII+</div>
+				<div class="table-cell">5.12a</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">8b</div>
+				<div class="table-cell">7b</div>
+				<div class="table-cell">-</div>
+				<div class="table-cell">5.12b</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">8c</div>
+				<div class="table-cell">7b+</div>
+				<div class="table-cell">IX-</div>
+				<div class="table-cell">5.12c</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">9a</div>
+				<div class="table-cell">7c</div>
+				<div class="table-cell">IX</div>
+				<div class="table-cell">5.12d</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">9b</div>
+				<div class="table-cell">7c+</div>
+				<div class="table-cell">IX+</div>
+				<div class="table-cell">5.13a</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">9c</div>
+				<div class="table-cell">8a</div>
+				<div class="table-cell">-</div>
+				<div class="table-cell">5.13b</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">10a</div>
+				<div class="table-cell">8a+</div>
+				<div class="table-cell">X-</div>
+				<div class="table-cell">5.13c</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">10b</div>
+				<div class="table-cell">8b</div>
+				<div class="table-cell">X</div>
+				<div class="table-cell">5.13d</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">10c</div>
+				<div class="table-cell">8b+</div>
+				<div class="table-cell">X+</div>
+				<div class="table-cell">5.14a</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">11a</div>
+				<div class="table-cell">8c</div>
+				<div class="table-cell">-</div>
+				<div class="table-cell">5.14b</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">11b</div>
+				<div class="table-cell">8c+</div>
+				<div class="table-cell">XI-</div>
+				<div class="table-cell">5.14c</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">11c</div>
+				<div class="table-cell">9a</div>
+				<div class="table-cell">XI</div>
+				<div class="table-cell">5.14d</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">12a</div>
+				<div class="table-cell">9a+</div>
+				<div class="table-cell">XI+</div>
+				<div class="table-cell">5.15a</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">12b</div>
+				<div class="table-cell">9b</div>
+				<div class="table-cell">-</div>
+				<div class="table-cell">5.15b</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">12c</div>
+				<div class="table-cell">9b+</div>
+				<div class="table-cell">XII-</div>
+				<div class="table-cell">5.15c</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script type="text/javascript" src="js/inicia.js"></script>
+</body>
+</html>
