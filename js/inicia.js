@@ -25,7 +25,7 @@ function inicia_app(v) {
   // compoenent de guias
   let guias_component = new GuiasComponent(app);
 
-  // component de modai
+  // component de modal
   let modal_component = new ModalComponent(raiz.vias, app);
 
   // gambiarra: component da barra de navegação
