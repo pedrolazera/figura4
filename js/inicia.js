@@ -11,7 +11,7 @@ function inicia_app(v) {
   let via_component = new ViasComponent(raiz, raiz.vias, raiz.locais, app);
   app.set_component_as_main_component(via_component._ID);
 
-  // componente de contato
+  // componente das conquistas
   let conquistas_component = new ConquistasComponent(raiz.vias, app);
 
   // componente de contato
@@ -31,17 +31,16 @@ function inicia_app(v) {
   // gambiarra: component da barra de navegação
   add_navbar_component();
 
-
   // liga alguns links
   add_header_bidings();
   add_navbar_bindings();
 
   // 1o estado
-  if (window.location.hash == "")
+  if (window.location.hash == "") {
     app.go_to_initial_state();
-  else
+  } else {
     app.render();
-
+  }
 }
 
 // funcoes que estao aqui por preguica
@@ -56,8 +55,8 @@ function toggle_search_box() {
     y.classList.toggle("invisible");
     x.focus();
 }
-//////////////////////////////////////
 
+//////////////////////////////////////
 
 function add_navbar_bindings() {
   let node;
