@@ -123,3 +123,11 @@ experimento - ícones da ficha
 .ficha_icon.far:not(.disabled):hover {
 	background-color: rgb(210, 210, 210);
 }
+
+.fonte-de-via {
+	border-radius: 8px;
+	background-color: rgb(236,235,201);
+	padding: 5px 10px;
+	margin: 5px 2px;
+	margin-left: 10px;
+}

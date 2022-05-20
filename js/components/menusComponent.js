@@ -143,9 +143,10 @@ class ViasComponent {
 		t.set_node_content('graduacao', grad);
 		t.set_node_content('extensao', ext);
 		t.set_node_content('ano', ano);
+
 		let p;
 		if(node.comentarios.length > 0) {
-				for(let comentario of node.comentarios) {
+			for(let comentario of node.comentarios) {
 				p = document.createElement("p");
 				p.textContent = comentario;
 				t.append_child("observacoes", p);
@@ -155,6 +156,20 @@ class ViasComponent {
 			p.textContent = "--";
 			t.append_child("observacoes", p);
 		}
+
+		// Adiciona fontes
+		if(node.fontes.length > 0) {
+			p = document.createElement("p");
+			p.textContent = "Fonte:"
+			for(let fonte of node.fontes) {
+				let span = document.createElement("span");
+				span.classList.add("fonte-de-via");
+				span.textContent = fonte;
+				p.appendChild(span);
+			}
+
+			t.append_child("observacoes", p);
+		}		
 		
 
 		if(conq.length > 0) {

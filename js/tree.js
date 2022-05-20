@@ -13,7 +13,7 @@ class LocalNode {
 
 class ViaNode {
   constructor(nome, id_nome, pai, grau, extensao, ano,
-  			  conquistadores, comentarios, croqui, imgs) {
+  			  conquistadores, comentarios, croqui, imgs, fontes) {
     this.nome = nome;
     this.id_nome = id_nome;
     this.pai = pai;
@@ -26,6 +26,7 @@ class ViaNode {
     this.croqui = croqui;
     this.imgs = imgs;
     this.tipo = "via";
+    this.fontes = fontes;
   }
 }
 
@@ -34,7 +35,7 @@ function get_node_from_jsonNode(json_node, pai = null) {
 		var node = new ViaNode(json_node.nome, json_node.id_nome, pai,
 			json_node.graduacao, json_node.extensao, json_node.ano,
 			json_node.conquistadores, json_node.observacoes,
-			json_node.path_croqui, json_node.v_path_imgs);
+			json_node.path_croqui, json_node.v_path_imgs, json_node.fontes);
 	} else {
 		var node = new LocalNode(json_node.nome, json_node.id_nome,
 			[], json_node.qtd_vias, pai);
