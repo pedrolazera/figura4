@@ -10,10 +10,11 @@ const _ID_T_VIA = "t-via";
 const _ID_T_VIA_CONTENT = "t-via-content";
 
 class ViasComponent {
-	constructor(raiz, vias, locais, app) {
+	constructor(raiz, vias, locais, dic_fontes, app) {
 		this.raiz = raiz;
 		this.vias = vias;
 		this.locais = locais;
+		this.dic_fontes = dic_fontes;
 		this._app = app;
 		this._ID = "vias";
 
@@ -160,11 +161,13 @@ class ViasComponent {
 		// Adiciona fontes
 		if(node.fontes.length > 0) {
 			p = document.createElement("p");
-			p.textContent = "Fonte:"
+			p.textContent = "Fontes:"
 			for(let fonte of node.fontes) {
-				let span = document.createElement("span");
+				let span = document.createElement("a");
 				span.classList.add("fonte-de-via");
-				span.textContent = fonte;
+				span.textContent = this.dic_fontes[fonte]["nome"];
+				span.setAttribute("href", this.dic_fontes[fonte]["link"]);
+				span.setAttribute("target", "_blank");
 				p.appendChild(span);
 			}
 

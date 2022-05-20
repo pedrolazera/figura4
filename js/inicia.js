@@ -3,12 +3,13 @@
 // unica var global, para controlar tudo!
 var app;
 
-function inicia_app(v) {
+function inicia_app(v, dic_fontes) {
   app = new App();
 
   // componente das vias
   let raiz = jsonTree_to_tree(v);
-  let via_component = new ViasComponent(raiz, raiz.vias, raiz.locais, app);
+  let via_component = new ViasComponent(raiz, raiz.vias,
+    raiz.locais, dic_fontes, app);
   app.set_component_as_main_component(via_component._ID);
 
   // componente das conquistas
@@ -178,7 +179,7 @@ function liga_links(v_ids, v_functions, v_events) {
 }
 
 window.onload = function () {
-  inicia_app(v_nodes);
+  inicia_app(v_nodes, dic_fontes);
 }
 
 window.onpopstate = function (event) {
