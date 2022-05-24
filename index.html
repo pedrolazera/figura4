@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/tree.js"></script>
 	<script type="text/javascript" src="js/templates.js"></script>
+	<script type="text/javascript" src="js/folha_local.js"></script>
 	
 	<!-- components -->
 	<script type="text/javascript" src="js/components/staticComponent.js"></script>
@@ -541,6 +542,24 @@
 			</div>
 		</div>
 	</div>
+</template>
+
+
+<!-- template de folha da local -->
+
+<!-- templates do menu - estrutura com estatística de local -->
+<template id="t-local-folha">
+	<div class="grid-content-menus">
+		<div ref="loc" class="grid-content-menus-localizacao"></div>
+		<div ref="local-folha" class="grid-content-menus-local-folha"></div>
+	</div>
+</template>
+
+<template id="t-local-folha-content">
+	<div class="desc_row">
+		<div ref="titulo" class="desc_row_item desc_row_title"></div>
+	</div>
+	<div ref="teste"></div>
 </template>
 
 <script type="text/javascript" src="js/inicia.js"></script>

@@ -8,6 +8,8 @@ const _ID_T_ITEM_LOCAL = "t-menus-item-local";
 const _ID_T_ITEM_VIA = "t-menus-item-via";
 const _ID_T_VIA = "t-via";
 const _ID_T_VIA_CONTENT = "t-via-content";
+const _ID_T_LOCAL_FOLHA = "t-local-folha";
+const _ID_T_LOCAL_FOLHA_CONTENT = "t-local-folha-content";
 
 class ViasComponent {
 	constructor(raiz, vias, locais, dic_fontes, app) {
@@ -89,7 +91,15 @@ class ViasComponent {
 
 			t = this._create_template_menu(v_nodes, [], true);
 		} else if (tipo == this._VISITA_FOLHA_LOCAL) {
-			throw "Visita a folha de local ainda nao implementado!";
+			//throw "Visita a folha de local ainda nao implementado!";
+			let id_nome = parseInt(state.id_nome);
+			let node = this.locais[state.id_nome];
+
+			//update inner state
+			this.inner_state.tipo = tipo;
+			this.inner_state.curr_node = node;
+
+			t = this._create_template_local_folha(node);
 		} else {
 			throw "Tipo de visualizacao desconhecido!"
 		}
@@ -418,6 +428,26 @@ class ViasComponent {
 			_app.go_to_page(id_component, state);
 		});
 	}
+
+	_create_template_local_folha(node) {
+		set_dist_graus(node);
+		let t = create_empty_template_local_folha();
+
+		// localizacao
+		let tag_menu_location = t.get_node("loc");
+		let v_location_nodes = get_caminho_with_nodes(node);
+		let location_fragment = this._get_location_span_from_location_nodes(v_location_nodes);
+		tag_menu_location.insertBefore(location_fragment, null);
+
+		// interno
+		let tag_local_folha = t.get_node("local-folha");
+		let interno_template = create_empty_template_local_folha_content();
+		interno_template.set_node_content("titulo", node.nome + " - Estatísticas");
+		interno_template.set_node_content("teste", String(Object.entries(node["dist_graus"]).join("\n")));
+		tag_local_folha.insertBefore(interno_template.fragment, null);
+
+		return t;
+	}
 }
 
 /* Create templates */
@@ -443,6 +473,16 @@ function create_empty_template_via() {
 
 function create_empty_template_via_content() {
 	let t = new Template(_ID_T_VIA_CONTENT, "ref");
+	return t;
+}
+
+function create_empty_template_local_folha() {
+	let t = new Template(_ID_T_LOCAL_FOLHA, "ref");
+	return t;
+}
+
+function create_empty_template_local_folha_content() {
+	let t = new Template(_ID_T_LOCAL_FOLHA_CONTENT, "ref");
 	return t;
 }
 
