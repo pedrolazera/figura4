@@ -431,6 +431,7 @@ class ViasComponent {
 
 	_create_template_local_folha(node) {
 		set_dist_graus(node);
+		set_dist_anos(node);
 		let t = create_empty_template_local_folha();
 
 		// localizacao
@@ -440,10 +441,14 @@ class ViasComponent {
 		tag_menu_location.insertBefore(location_fragment, null);
 
 		// interno
+		// // bagunca temporaria, apenas para teste
 		let tag_local_folha = t.get_node("local-folha");
 		let interno_template = create_empty_template_local_folha_content();
 		interno_template.set_node_content("titulo", node.nome + " - Estatísticas");
-		interno_template.set_node_content("teste", String(Object.entries(node["dist_graus"]).join("\n")));
+		interno_template.set_node_content("teste_graus",
+			String(Object.entries(node["dist_graus"]).join("\n")));
+		interno_template.set_node_content("teste_anos",
+			String(Object.entries(node["dist_anos"]).join("\n")));
 		tag_local_folha.insertBefore(interno_template.fragment, null);
 
 		return t;
