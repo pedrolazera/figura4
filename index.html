@@ -24,6 +24,7 @@
 	<link rel="stylesheet" type="text/css" href="styles/conquistas.css">
 	<link rel="stylesheet" type="text/css" href="styles/guias.css">
 	<link rel="stylesheet" type="text/css" href="styles/contato.css">
+	<link rel="stylesheet" type="text/css" href="styles/folha_local.css">
 
 	<!-- js interno -->
 	<!--<script type="text/javascript" src="/static/js/requests.js"></script>-->
@@ -141,6 +142,15 @@
 		<div class="badges">
 			<div ref="grau" class="badge badge-grau-via item-via-grau">-</div>
 			<div ref="extensao" class="badge badge-ext-via item-via-ext">-</div>
+		</div>
+	</div>
+</template>
+
+<!-- templates do menu interno - cartao dos detalhes do local -->
+<template id="t-menus-item-local_folha">
+	<div ref="container" class="grid-content-item item-local-folha">
+		<div ref="left" class="left">
+			<div ref="nome" class="nome"></div>
 		</div>
 	</div>
 </template>
@@ -559,8 +569,19 @@
 	<div class="desc_row">
 		<div ref="titulo" class="desc_row_item desc_row_title"></div>
 	</div>
-	<div ref="teste_graus"></div>
-	<div ref="teste_anos"></div>
+	<div class="chart-container">
+		<div class="chart-title">Vias por grau</div>
+		<div class="chart-body" ref="chart-body">
+			<!--<div class="chart-column-container">
+				<div class="chart-bar-value"></div>
+		    	<div class="chart-bar" qtd="3"> </div>
+			</div>-->
+		</div>
+		<div class="chart-x-axis"></div>
+		<div class="chart-labels-container" ref="chart-labels-container">
+			<!--<div class="chart-label">3°</div>-->
+		</div>
+	</div>
 </template>
 
 <script type="text/javascript" src="js/inicia.js"></script>

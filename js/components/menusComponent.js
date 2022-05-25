@@ -6,6 +6,7 @@ const _CLS_SET_INVISIBLE = "invisible";
 const _ID_T_MENU = "t-menus";
 const _ID_T_ITEM_LOCAL = "t-menus-item-local";
 const _ID_T_ITEM_VIA = "t-menus-item-via";
+const _ID_T_ITEM_LOCAL_FOLHA = "t-menus-item-local_folha";
 const _ID_T_VIA = "t-via";
 const _ID_T_VIA_CONTENT = "t-via-content";
 const _ID_T_LOCAL_FOLHA = "t-local-folha";
@@ -24,7 +25,7 @@ class ViasComponent {
 		this._VISITA_LOCAL = "local";
 		this._VISITA_FOLHA_VIA = "folha_via";
 		this._VISITA_BUSCA = "busca";
-		this._VISITA_FOLHA_LOCAL = "folha_local";
+		this._VISITA_FOLHA_LOCAL = "local_folha";
 
 		// constantes de ordenacao
 		this._SORT_BY_NOME = 0;
@@ -69,8 +70,9 @@ class ViasComponent {
 			this.inner_state.curr_v_nodes = v_nodes;
 			this.inner_state.tipo = tipo;
 			this.inner_state.add_loc_to_menu_itens = false;
+			this.inner_state.add_local_folha = true
 
-			t = this._create_template_menu(v_nodes, v_location_nodes, false);
+			t = this._create_template_menu(v_nodes, v_location_nodes, false, true);
 		} else if (tipo == this._VISITA_FOLHA_VIA) {
 			let id_nome = parseInt(state.id_nome);
 			let node = this.vias[state.id_nome];
@@ -88,6 +90,7 @@ class ViasComponent {
 			this.inner_state.curr_v_nodes = v_nodes;
 			this.inner_state.tipo = tipo;
 			this.inner_state.add_loc_to_menu_itens = true;
+			this.inner_state.add_local_folha = false
 
 			t = this._create_template_menu(v_nodes, [], true);
 		} else if (tipo == this._VISITA_FOLHA_LOCAL) {
@@ -212,21 +215,15 @@ class ViasComponent {
 
 	/* menus internos*/
 
-	/*_create_template_menu_from_node(node, add_loc_to_menu_itens = false) {
-		let v_location_nodes = get_caminho_with_nodes(node);
-		let t = this._create_template_menu(node.filhos,
-			v_location_nodes, add_loc_to_menu_itens);
-		return t;
-	}*/
-
 	_create_template_menu(v_nodes, v_location_nodes = [],
-		add_loc_to_menu_itens = false) {
+		add_loc_to_menu_itens = false, add_local_folha = false) {
 		let t = create_empty_template_menu();
 
 		let tag_menu_location = t.get_node("loc");
 		let tag_menu_lista = t.get_node("lista");
 
-		let lista_fragment = this._get_menu_itens_from_node_list(v_nodes, add_loc_to_menu_itens);
+		let lista_fragment = this._get_menu_itens_from_node_list(v_nodes,
+			add_loc_to_menu_itens, add_local_folha);
 		tag_menu_lista.insertBefore(lista_fragment, null);
 
 		let location_fragment = this._get_location_span_from_location_nodes(v_location_nodes);
@@ -243,9 +240,17 @@ class ViasComponent {
 		return t;
 	}
 
-	_get_menu_itens_from_node_list(v, add_loc_to_menu_itens = false) {
+	_get_menu_itens_from_node_list(v, add_loc_to_menu_itens = false,
+		add_local_folha = false) {
 		let fragment = document.createDocumentFragment();
 		let ti;
+
+		if(add_local_folha && (v[0].pai.nome != "Raiz")) {
+			ti =  create_empty_template_menu_item_local_folha();
+			this._add_link_to_local_folha(ti.get_node("container"), v[0].pai.id_nome);
+			ti.set_node_content("nome", "Detalhes do local");
+			fragment.insertBefore(ti.fragment, null);
+		}
 
 		for (let vi of v) {
 			if(vi.tipo == "local") {
@@ -289,13 +294,23 @@ class ViasComponent {
 		let fragment = document.createDocumentFragment();
 		let dom_node;
 		for (let node of v) {
-
 			dom_node = document.createElement("span");
 			dom_node.textContent = node.nome;
 			this._add_link_to_local(dom_node, node.id_nome);
 
 			fragment.insertBefore(dom_node, null);
 		}
+
+		return fragment;
+	}
+
+	_get_location_span_and_local_folha_span(v) {
+		let fragment = this._get_location_span_from_location_nodes(v);
+		let node_local = v[v.length-1];
+		let dom_node = document.createElement("span");
+		dom_node.textContent = "Estatísticas";
+		this._add_link_to_local_folha(dom_node, node_local.id_nome);
+		fragment.insertBefore(dom_node, null);
 
 		return fragment;
 	}
@@ -389,10 +404,12 @@ class ViasComponent {
 	_sort_by(sort_fn) {
 		let v_nodes = this.inner_state.curr_v_nodes;
 		let add_loc_to_menu_itens = this.inner_state.add_loc_to_menu_itens;
+		let add_local_folha = this.inner_state.add_local_folha;
 
 		v_nodes.sort(sort_fn);
 		
-		let lista = this._get_menu_itens_from_node_list(v_nodes, add_loc_to_menu_itens);
+		let lista = this._get_menu_itens_from_node_list(v_nodes,
+			add_loc_to_menu_itens, add_local_folha);
 		let wrapper_conteudo = document.getElementById("menus-list");
 		this._app.render_from_node(wrapper_conteudo, lista);
 	}
@@ -422,6 +439,13 @@ class ViasComponent {
 		return this._add_link_to_node(node, "conquistas", state);
 	}
 
+	_add_link_to_local_folha(node, id_local) {
+		let state = {"id_nome": id_local,
+					 "tipo": this._VISITA_FOLHA_LOCAL};
+		return this._add_link_to_node(node,
+			this.id_component, state);
+	}
+
 	_add_link_to_node(node, id_component, state) {
 		let _app = this._app;
 		node.addEventListener("click", function() {
@@ -437,21 +461,89 @@ class ViasComponent {
 		// localizacao
 		let tag_menu_location = t.get_node("loc");
 		let v_location_nodes = get_caminho_with_nodes(node);
-		let location_fragment = this._get_location_span_from_location_nodes(v_location_nodes);
+		//let location_fragment = this._get_location_span_from_location_nodes(v_location_nodes);
+		let location_fragment = this._get_location_span_and_local_folha_span(v_location_nodes);
 		tag_menu_location.insertBefore(location_fragment, null);
 
 		// interno
 		// // bagunca temporaria, apenas para teste
 		let tag_local_folha = t.get_node("local-folha");
-		let interno_template = create_empty_template_local_folha_content();
-		interno_template.set_node_content("titulo", node.nome + " - Estatísticas");
-		interno_template.set_node_content("teste_graus",
-			String(Object.entries(node["dist_graus"]).join("\n")));
-		interno_template.set_node_content("teste_anos",
-			String(Object.entries(node["dist_anos"]).join("\n")));
-		tag_local_folha.insertBefore(interno_template.fragment, null);
+		let chart_node = this._get_chart_node(node);
+		tag_local_folha.insertBefore(chart_node, null);
 
 		return t;
+	}
+
+	_get_chart_node(node) {
+		set_dist_graus(node);
+		let t = create_empty_template_local_folha_content();
+		t.set_node_content("titulo", node.nome + " - Estatísticas");
+
+		let chart_body_node = t.get_node("chart-body");
+		let chart_labels_container = t.get_node("chart-labels-container");
+		let graus_ordenados = Object.keys(node["dist_graus"]);
+		graus_ordenados.sort(function(a,b) {
+				if((a==null) || (b==null)) return 0;
+				else return(Number(a)-Number(b));
+			}
+		)
+
+		// pega maior qtd
+		let max_qtd = 0;
+		for(let grau of graus_ordenados) {
+			max_qtd = Math.max(max_qtd, node["dist_graus"][grau]);
+		}
+
+		// caso excepcional: zero vias com grau parseavel
+		if(max_qtd == 0) {
+			return t.fragment;
+		}
+
+		// demais casos
+		for(let grau of graus_ordenados) {
+			let qtd_vias = node["dist_graus"][grau];
+			if(qtd_vias > 0) {
+				// cria barra
+				let node_col_container = document.createElement("div");
+				node_col_container.classList.add("chart-column-container");
+				chart_body_node.insertBefore(node_col_container, null);
+
+				let node_bar_value = document.createElement("div");
+				node_bar_value.classList.add("chart-bar-value");
+				node_bar_value.textContent = qtd_vias;
+				node_col_container.insertBefore(node_bar_value, null);
+
+				let node_bar = document.createElement("div");
+				node_bar.classList.add("chart-bar");
+				node_bar.classList.add("_" + String(grau));
+				node_col_container.insertBefore(node_bar, null);
+
+				// cria rótulo no eixo x
+				let node_label = document.createElement("div");
+				node_label.classList.add("chart-label");
+				node_label.textContent = " " + String(grau) + "º";
+				chart_labels_container.insertBefore(node_label, null);
+
+				// gambiarra para altura das barras
+				node_bar_value.style.flexGrow = (max_qtd + 1 - qtd_vias);
+				node_bar.style.flexGrow = (qtd_vias);
+			}
+		}
+
+		// altura das barras
+		/*
+		let n1 = document.querySelector(".chart-column-container");
+		let n2 = document.querySelector(".chart-bar-value");
+		let max_h_px = n1.clientHeight - n2.offsetHeight;
+
+		for(let node_bar of chart_body_node.querySelectorAll("chart-bar")) {
+			let qtd_vias = node["dist_graus"][grau];
+			if(qtd_vias > 0) {
+				let h_in_px = qtd_vias/max_qtd * max_h_px;
+				let str_h_in_px = String(h_in_px) + "px";
+		*/
+
+		return t.fragment;
 	}
 }
 
@@ -468,6 +560,11 @@ function create_empty_template_menu_item_local() {
 
 function create_empty_template_menu_item_via() {
 	let t = new Template(_ID_T_ITEM_VIA, "ref");
+	return t;
+}
+
+function create_empty_template_menu_item_local_folha() {
+	let t = new Template(_ID_T_ITEM_LOCAL_FOLHA, "ref");
 	return t;
 }
 

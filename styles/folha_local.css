@@ -1,0 +1,161 @@
+.chart-container {
+	height: 260px;
+	width: 100%;
+	box-sizing: border-box;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/*border: 1px solid purple;*/
+
+	/*background-color: rgb(245, 245, 245);*/
+	border-top:  1px dashed gray;
+	border-bottom:  1px dashed gray;
+	padding: 35px 5px;
+}
+
+.chart-title {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 700px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+.chart-body {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+	height: 80%;
+
+	flex-basis: 0;
+	flex-grow: 1;
+	column-gap: 10px;
+	padding: 0px 10px;
+	padding-bottom: 0.7px;
+
+	max-width: 700px;
+}
+
+.chart-column-container {
+	box-sizing: border-box;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	flex-grow: 1;
+	flex-basis: 0;
+
+	height: 100%;
+	max-width: 60px;
+
+	/*
+	border:  3px solid pink;
+	background-color: green;
+	*/
+}
+
+/****************************
+********** CHART BAR ********
+*****************************/
+
+.chart-bar {
+	width: 100%;
+	box-sizing: border-box;
+
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+}
+
+.chart-bar:hover {
+	border:  4px solid rgba(220, 220, 220, 0.9);
+}
+
+.chart-bar._1 {
+	background-color: #CCD5AE;
+}
+
+.chart-bar._2 {
+	background-color: #DBE1BC;
+}
+
+.chart-bar._3 {
+	background-color: #E9EDC9;
+}
+
+.chart-bar._4 {
+	background-color: #F4F4D5;
+}
+
+.chart-bar._5 {
+	background-color: #FEFAE0;
+}
+
+.chart-bar._6 {
+	background-color: #FCF4D7;
+}
+
+.chart-bar._7 {
+	background-color: #FAEDCD;
+}
+
+.chart-bar._8 {
+	background-color: #E7C8A0;
+}
+
+.chart-bar._9 {
+	background-color: #DEB68A;
+}
+
+.chart-bar._10 {
+	background-color: #D4A373;
+}
+
+.chart-bar-value {
+	/*text-align: center;*/
+	font-size: 0.9em;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+
+}
+
+.chart-labels-container {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+	column-gap: 10px;
+	padding: 0px 10px;
+	padding-bottom: 0.7px;
+	
+	flex-basis: 0;
+	flex-grow: 0;
+	height: 1em;
+
+	max-width: 700px;
+	font-weight: 500;
+}
+
+.chart-label {
+	box-sizing: border-box;
+	flex-basis: 0;
+	flex-grow: 1;
+	text-align: center;
+	max-width: 60px;
+	/*border:  1px solid pink;*/
+}
+
+.chart-x-axis {
+	box-sizing: border-box;
+	height: 2px;
+	width: 100%;
+	background-color: black;
+	margin-bottom: 5px;
+
+	max-width: 700px;
+}

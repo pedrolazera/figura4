@@ -149,6 +149,9 @@ function set_dist_anos(node) {
 			for(let filho of node.filhos) {
 				if(filho.tipo == "via") {
 					let ano = filho.ano;
+					if(ano == null) {
+						continue;
+					}
 					
 					if(!node["dist_anos"].hasOwnProperty(ano)) {
 						node["dist_anos"][ano] = 0;

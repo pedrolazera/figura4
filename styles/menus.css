@@ -169,6 +169,15 @@
 	margin-top: 5px;
 }
 
+.grid-content-item.item-local-folha {
+	background-color: #ccd5ae;
+}
+
+.grid-content-item.item-local-folha:hover {
+	background-color: #A0AF83;
+	/*color: #3E4928;*/
+}
+
 @media (min-width: 670px) {
 	.grid-content-menus {
 		align-self: flex-start;
@@ -223,6 +232,7 @@
 		margin-bottom: 20px;
 		width: 210px;
 		/*box-sizing: border-box;*/
+		border-radius: 5px;
 	}
 }
 
