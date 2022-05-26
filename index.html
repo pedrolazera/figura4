@@ -99,8 +99,14 @@
 	<div class="grid-content-menus">
 		<div class="menus-options">
 			<div class="menus-options-toggle">
-				<span> Filtros </span>
-				<span class="menus-options-toggle-plus" ref="plus"> + </span>
+				<span class="local-detalhes" ref="local-detalhes">
+					Detalhes do Local
+				</span>
+				
+				<span class="menus-options-toggle-plus" ref="plus">
+					<span>Filtros</span>
+					<span>+</span>
+				</span>
 			</div>
 
 			<div class="menus-options-list invisible" id="menus-options-list" ref="options-btn">
@@ -109,6 +115,7 @@
 					<div class="menus-ordena-options">
 						<div class="menus-ordena-nome" ref="sort-by-nome"> Nome </div>
 						<div class="menus-ordena-extensao" ref="sort-by-extensao"> Extensão </div>
+						<div class="menus-ordena-grau" ref="sort-by-grau"> Grau </div>
 					</div>
 				</div>
 			</div> <!-- <div class="guias-options-list"> -->
@@ -570,7 +577,7 @@
 		<div ref="titulo" class="desc_row_item desc_row_title"></div>
 	</div>
 	<div class="chart-container">
-		<div class="chart-title">Vias por grau</div>
+		<div class="chart-title">>> Vias por grau</div>
 		<div class="chart-body" ref="chart-body">
 			<!--<div class="chart-column-container">
 				<div class="chart-bar-value"></div>

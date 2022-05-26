@@ -68,6 +68,18 @@ function get_max_h_px() {
 function parse_grau(g) {
 	g = String(g);
 	g = g.trim().toLowerCase();
+
+	// retira duração
+	let i = 0;
+	if((g.length > 0) && (g[i]=='d')) {
+		while((g.length > i) && (g[i]!=' ')) {
+			i += 1;
+		}
+
+		g = g.slice(i+1, g.length);
+	}
+	
+
 	g = g.split(' ')[0]
 
 	let n;

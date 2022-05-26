@@ -44,17 +44,49 @@
 	background-color: rgb(194, 214, 214);
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-end;
-	align-items: center;
-	padding: 5px 25px 5px 10px;
+	justify-content: space-between;
+	align-items: stretch;
+	padding: 5px 15px 5px 15px;
 	border-bottom: 1px solid gray;
 }
 
 .menus-options-toggle-plus {
+	padding: 5px 13px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	border:  2px solid rgba(27, 31, 35, .15);
+	border-radius: 18px;
+	background-color: #E7EEF1;
+}
+
+.menus-options-toggle-plus:hover {
+	cursor: pointer;
+	background-color: rgb(210, 210, 210);
+}
+
+.menus-options-toggle-plus > span:nth-of-type(2) {
+	padding-left: 10px;
 	font-size: 1.7rem;
 	font-weight: 800;
-	padding: 0 5px 0 10px;
+}
+
+.local-detalhes {
+	border:  2px solid rgba(27, 31, 35, .15);
+	padding: 5px 13px;
+	display: flex;
+	align-items: center;
+	border-radius: 18px;
+	background-color: #E7EEF1;
+}
+
+.local-detalhes:hover {
 	cursor: pointer;
+	background-color: rgb(210, 210, 210);
+}
+
+.local-detalhes.invisible {
+	display: None;
 }
 
 .menus-options-list {
@@ -99,6 +131,7 @@
 	align-content: center;
 	flex-grow: 1;
 	margin-left: 15px;
+	flex-wrap: wrap;
 }
 
 .menus-ordena-options > div {
@@ -106,11 +139,13 @@
 	margin-right: 15px;
 	background-color: rgb(230, 230, 230);
 	border-radius: 5px;
+	margin-top: 2.5px;
+	margin-bottom: 2.5px;
 }
 
 .menus-ordena-options > div:hover {
 	cursor: pointer;
-	background-color: rgb(210, 210, 210);;
+	background-color: rgb(210, 210, 210);
 }
 
 
