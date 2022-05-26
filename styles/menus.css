@@ -89,6 +89,22 @@
 	display: None;
 }
 
+.local-detalhes > span:nth-of-type(2) {
+	/*padding: 2px 8px;*/
+	font-size: 1.1em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	border:  2px solid black;
+	border-radius: 50%;
+	width: 1.1em;
+	margin-left: 10px;
+	font-weight: 800;
+	font-family: georgia;
+}
+
+
 .menus-options-list {
 	border-bottom: 2px solid black;
 	border-top: 2px solid black;
