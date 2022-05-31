@@ -113,6 +113,14 @@
 	background-color: #D4A373;
 }
 
+.chart-bar._10 {
+	background-color: #AF7A46;
+}
+
+.chart-bar._11 {
+	background-color: #A5945C;
+}
+
 .chart-bar-value {
 	/*text-align: center;*/
 	font-size: 0.9em;
