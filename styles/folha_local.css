@@ -167,3 +167,15 @@
 
 	max-width: 700px;
 }
+
+/***********************
+*** distribuicao anos ***
+************************/
+
+#dist-anos-chart-container > .chart-body {
+	column-gap: 1px;
+}
+
+.chart-bar-ano {
+	background-color: #A685B4;
+}

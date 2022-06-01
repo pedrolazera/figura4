@@ -525,8 +525,9 @@ class ViasComponent {
 		let t = create_empty_template_local_folha_content();
 		t.set_node_content("titulo", node.nome + " - Estatísticas");
 
-		let chart_body_node = t.get_node("chart-body");
-		let chart_labels_container = t.get_node("chart-labels-container");
+		///// grafico dos graus
+		let chart_body_node = t.get_node("chart-graus-body");
+		let chart_labels_container = t.get_node("chart-graus-labels-container");
 		let graus_ordenados = Object.keys(node["dist_graus"]);
 		graus_ordenados.sort(function(a,b) {
 				if((a==null) || (b==null)) return 0;
@@ -541,53 +542,79 @@ class ViasComponent {
 		}
 
 		// caso excepcional: zero vias com grau parseavel
-		if(max_qtd == 0) {
-			return t.fragment;
-		}
+		if(max_qtd > 0) {
+			for(let grau of graus_ordenados) {
+				let qtd_vias = node["dist_graus"][grau];
+				if(qtd_vias > 0) {
+					// cria barra
+					let node_col_container = document.createElement("div");
+					node_col_container.classList.add("chart-column-container");
+					chart_body_node.insertBefore(node_col_container, null);
 
-		// demais casos
-		for(let grau of graus_ordenados) {
-			let qtd_vias = node["dist_graus"][grau];
-			if(qtd_vias > 0) {
-				// cria barra
-				let node_col_container = document.createElement("div");
-				node_col_container.classList.add("chart-column-container");
-				chart_body_node.insertBefore(node_col_container, null);
+					let node_bar_value = document.createElement("div");
+					node_bar_value.classList.add("chart-bar-value");
+					node_bar_value.textContent = qtd_vias;
+					node_col_container.insertBefore(node_bar_value, null);
 
-				let node_bar_value = document.createElement("div");
-				node_bar_value.classList.add("chart-bar-value");
-				node_bar_value.textContent = qtd_vias;
-				node_col_container.insertBefore(node_bar_value, null);
+					let node_bar = document.createElement("div");
+					node_bar.classList.add("chart-bar");
+					node_bar.classList.add("_" + String(grau));
+					node_col_container.insertBefore(node_bar, null);
 
-				let node_bar = document.createElement("div");
-				node_bar.classList.add("chart-bar");
-				node_bar.classList.add("_" + String(grau));
-				node_col_container.insertBefore(node_bar, null);
+					// cria rótulo no eixo x
+					let node_label = document.createElement("div");
+					node_label.classList.add("chart-label");
+					node_label.textContent = " " + String(grau) + "º";
+					chart_labels_container.insertBefore(node_label, null);
 
-				// cria rótulo no eixo x
-				let node_label = document.createElement("div");
-				node_label.classList.add("chart-label");
-				node_label.textContent = " " + String(grau) + "º";
-				chart_labels_container.insertBefore(node_label, null);
-
-				// gambiarra para altura das barras
-				node_bar_value.style.flexGrow = (max_qtd + 1 - qtd_vias);
-				node_bar.style.flexGrow = (qtd_vias);
+					// gambiarra para altura das barras
+					node_bar_value.style.flexGrow = (max_qtd + 1 - qtd_vias);
+					node_bar.style.flexGrow = (qtd_vias);
+				}
 			}
 		}
 
-		// altura das barras
-		/*
-		let n1 = document.querySelector(".chart-column-container");
-		let n2 = document.querySelector(".chart-bar-value");
-		let max_h_px = n1.clientHeight - n2.offsetHeight;
+		///// grafico dos anos
+		chart_body_node = t.get_node("chart-anos-body");
+		chart_labels_container = t.get_node("chart-anos-labels-container");
+		let anos_ordenados = Object.keys(node["dist_anos"]);
+		anos_ordenados.sort(function(a,b) {
+				if((a==null) || (b==null)) return 0;
+				else return(Number(a)-Number(b));
+			}
+		)
 
-		for(let node_bar of chart_body_node.querySelectorAll("chart-bar")) {
-			let qtd_vias = node["dist_graus"][grau];
-			if(qtd_vias > 0) {
-				let h_in_px = qtd_vias/max_qtd * max_h_px;
-				let str_h_in_px = String(h_in_px) + "px";
-		*/
+		// pega maior qtd
+		let max_qtd_dist_anos = 0;
+		for(let ano of anos_ordenados) {
+			max_qtd_dist_anos = Math.max(max_qtd_dist_anos, node["dist_anos"][ano]);
+		}
+
+		if(max_qtd_dist_anos) {
+			for(let ano of anos_ordenados) {
+				let qtd_vias = node["dist_anos"][ano];
+
+				if(qtd_vias > 0) {
+					// cria barra
+					let node_col_container = document.createElement("div");
+					node_col_container.classList.add("chart-column-container");
+					chart_body_node.insertBefore(node_col_container, null);
+
+					let node_bar_value = document.createElement("div");
+					node_bar_value.classList.add("chart-bar-value");
+					//node_bar_value.textContent = qtd_vias;
+					node_col_container.insertBefore(node_bar_value, null);
+
+					let node_bar = document.createElement("div");
+					node_bar.classList.add("chart-bar-ano");
+					node_col_container.insertBefore(node_bar, null);
+
+					// gambiarra para altura das barras
+					node_bar_value.style.flexGrow = (max_qtd_dist_anos + 1 - qtd_vias);
+					node_bar.style.flexGrow = (qtd_vias);
+				}
+			}
+		}
 
 		return t.fragment;
 	}

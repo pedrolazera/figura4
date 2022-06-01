@@ -229,11 +229,6 @@
 			</div>
 
 			<div class="conquistas-options-list invisible" id="conquistas-options-list">
-				<!--<div class="conquistas-option conquistas-busca" ref="busca" id="conquistas-busca">
-					<input id="conquistas-search-input" class="conquistas-search-bar" type="search" placeholder="nome do conquistador" ref="search-input">
-					<i id="conquistas-search-icon" class="fas fa-search" ref="search-icon"></i>
-				</div>-->
-				
 				<div class="conquistas-option conquistas-barra" ref="barra" id="conquistas-barra"></div>
 
 				<div class="conquistas-option conquistas-ordena" ref="ordena" id="conquistas-ordena">
@@ -577,17 +572,35 @@
 	<div class="desc_row">
 		<div ref="titulo" class="desc_row_item desc_row_title"></div>
 	</div>
-	<div class="chart-container">
+	<div class="chart-container" id="dist-graus-chart-container">
 		<div class="chart-title">>> Vias por grau</div>
-		<div class="chart-body" ref="chart-body">
-			<!--<div class="chart-column-container">
+		<div class="chart-body" ref="chart-graus-body">
+			<!--
+			<div class="chart-column-container">
 				<div class="chart-bar-value"></div>
 		    	<div class="chart-bar" qtd="3"> </div>
-			</div>-->
+			</div>
+			-->
 		</div>
 		<div class="chart-x-axis"></div>
-		<div class="chart-labels-container" ref="chart-labels-container">
-			<!--<div class="chart-label">3°</div>-->
+		<div class="chart-labels-container" ref="chart-graus-labels-container">
+			<!--<div class="chart-label"></div>-->
+		</div>
+	</div>
+
+	<div class="chart-container" id="dist-anos-chart-container" style="display: none">
+		<div class="chart-title">>> Vias por ano</div>
+		<div class="chart-body" ref="chart-anos-body">
+			<!--
+			<div class="chart-column-container">
+				<div class="chart-bar-value"></div>
+		    	<div class="chart-bar-ano" qtd="3"> </div>
+			</div>
+			-->
+		</div>
+		<div class="chart-x-axis"></div>
+		<div class="chart-labels-container" ref="chart-anos-labels-container">
+			<!--<div class="chart-label"></div>-->
 		</div>
 	</div>
 </template>
