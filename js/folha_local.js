@@ -78,8 +78,11 @@ function parse_grau(g) {
 
 		g = g.slice(i+1, g.length);
 	}
-	
 
+	// retira mais de um grau
+	g = g.split('/')[0]
+
+	// seleciona só a info até o grau
 	g = g.split(' ')[0]
 
 	let n;
